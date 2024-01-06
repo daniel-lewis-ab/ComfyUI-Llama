@@ -54,7 +54,7 @@ class LLM_Load_Model:
 
         return (llm,)
 
-class LLM_Generate:
+class LLM_Call:
 
     # A hopefully thin wrapper for the Llama generate method to bind it to ComfyUI
     @classmethod
@@ -89,12 +89,12 @@ class LLM_Generate:
         return (response['choices'][0]['text'], )
 
 NODE_CLASS_MAPPINGS = {
-    "LLM_Load_Model":LLM_Load_Model,
-    "LLM_Generate":LLM_Generate,
+    "Load LLM Model":LLM_Load_Model,
+    "Call LLM":LLM_Call,
 }
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "LLM_Load_Model": "LLM_Load_Model",
-    "LLM_Generate":"LLM_Generate",
+    "Load LLM Model": "Load LLM Model",
+    "Call LLM":"Call LLM",
 }
 
 
