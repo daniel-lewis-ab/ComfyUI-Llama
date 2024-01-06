@@ -1,0 +1,139 @@
+{
+  "last_node_id": 14,
+  "last_link_id": 11,
+  "nodes": [
+    {
+      "id": 10,
+      "type": "LLM_Generate",
+      "pos": [
+        600,
+        230
+      ],
+      "size": {
+        "0": 384,
+        "1": 236
+      },
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "LLM",
+          "type": "LLM",
+          "link": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            8
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LLM_Generate"
+      },
+      "widgets_values": [
+        "Write a python class that says \"Hello World\" to the user via command line.",
+        512,
+        0.8,
+        1113,
+        "randomize"
+      ]
+    },
+    {
+      "id": 4,
+      "type": "Save Text File",
+      "pos": [
+        1100,
+        230
+      ],
+      "size": {
+        "0": 315,
+        "1": 154
+      },
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 8,
+          "widget": {
+            "name": "text"
+          }
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Save Text File"
+      },
+      "widgets_values": [
+        "",
+        "./output/[time(%Y-%m-%d)]",
+        "ComfyUI",
+        "_",
+        4
+      ]
+    },
+    {
+      "id": 7,
+      "type": "LLM_Load_Model",
+      "pos": [
+        100,
+        230
+      ],
+      "size": [
+        400,
+        82
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "LLM",
+          "type": "LLM",
+          "links": [
+            7
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LLM_Load_Model"
+      },
+      "widgets_values": [
+        "wizardcoder-python-13b-v1.0.Q4_K_M.gguf",
+        0
+      ]
+    }
+  ],
+  "links": [
+    [
+      7,
+      7,
+      0,
+      10,
+      0,
+      "LLM"
+    ],
+    [
+      8,
+      10,
+      0,
+      4,
+      0,
+      "STRING"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {},
+  "version": 0.4
+}
