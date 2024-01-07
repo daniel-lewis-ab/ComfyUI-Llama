@@ -55,8 +55,9 @@ This is a simplified call of this:
 [llama-cpp-python's call method](https://abetlen.github.io/llama-cpp-python/#llama_cpp.llama.Llama.__call__)
 
 ## Examples
-See the example1.json or example1.png file.
-See the documentation for [llama-cpp-python](https://abetlen.github.io/llama-cpp-python/) for documentation on the llama-cpp-python interface
+![image](https://github.com/daniel-lewis-ab/ComfyUI-Llama/example1.png)
+You can also load the example1.json file.
+See the documentation for [llama-cpp-python](https://abetlen.github.io/llama-cpp-python/) on that interface
 
 # For Possible Contributors
 
