@@ -1,7 +1,11 @@
 # Llama for ComfyUI
 
 ## What is this
+In plain English, this lets you run language learning models to generate text by AI 'models'.
+
 This is an improved [llama-cpp-python](https://github.com/abetlen/llama-cpp-python) integration for ComfyUI.
+
+The models can be downloaded from [huggingface.co](https://huggingface.co/models?pipeline_tag=text-generation&sort=trending&search=GGUF)
 
 ## Features:
 - Currently let's you easily load GGUF models in a consistent fashion with other ComfyUI models and can use them to generate strings of output text with seemingly correct seeding and temperature.
