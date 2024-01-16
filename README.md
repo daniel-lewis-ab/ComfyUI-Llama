@@ -11,8 +11,8 @@ from one place and let us use it somewhere else.
 - [llama-cpp](https://github.com/ggerganov/llama.cpp) is a command line program that lets us use LLMs that are stored in the GGUF file format from [huggingface.co](https://huggingface.co/models?pipeline_tag=text-generation&sort=trending&search=GGUF)
 - [llama-cpp-python](https://github.com/abetlen/llama-cpp-python) lets us use llama.cpp in Python.
 - [stable diffusion](https://huggingface.co/spaces/stabilityai/stable-diffusion) is a command line program that lets us use image generation AI models.
-- ComfyUI lets us use Stable Diffusion using a flow graph layout.
-- So ComfyUI-Llama lets us use LLMs in ComfyUI.
+- [ComfyUI-Manager](https://github.com/ltdrdata/ComfyUI-Manager) lets us use Stable Diffusion using a flow graph layout.
+- So ComfyUI-Llama (that's us!)lets us use LLMs in ComfyUI.
 
 ## Why I Made This
 - I wanted to integrate text generation and image generation AI in one interface and see what other people can come up with to use them.
@@ -100,6 +100,9 @@ See the documentation for [llama-cpp-python](https://abetlen.github.io/llama-cpp
 
 - Will simply crash if llama-cpp-python throws an Error.  I haven't put any special effort in to handle them.
 
+# Conclusion
+
+We appreciate your interest in Llama for ComfyUI. Feel free to explore and provide feedback or report any issues you encounter. Your contributions and suggestions are valuable to the project.
 
 
 
