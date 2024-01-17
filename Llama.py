@@ -2,6 +2,8 @@
 import sys
 import os
 from typing import List
+from collections.abc import Sequence
+
 import folder_paths
 
 # Folder path and venv
@@ -78,6 +80,7 @@ class LLM_Load_Model_Advanced:
         tensor-split
         kv_overrides
         chat_handler
+        **kwargs
 
     Different:
         seed - I'm using ComfyUI's seed functionality and not llama-cpp-python's
@@ -342,6 +345,152 @@ class LLM_Sample:
         return (thebytes, )
 
 
+class LLM_Generate:
+    """
+    Create a generator of tokens from a prompt.
+
+    https://llama-cpp-python.readthedocs.io/en/latest/api-reference/#llama_cpp.Llama.generate
+
+    Problems:
+        tokens needs to be a Sequence[int]
+
+    Yields:
+        int
+    """
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "LLM":("LLM",),
+                "tokens":("TOKENS",),
+            },
+            "optional": {
+                "top_k":("INT",{"default":40}),
+                "top_p":("FLOAT",{"default":0.95}),
+                "min_p":("FLOAT",{"default":0.05}),
+                "typical_p":("FLOAT",{"default":1.0}),
+                "temp":("FLOAT",{"default":0.8}),
+                "repeat_penalty":("FLOAT",{"default":1.1}), 
+                "reset":("BOOLEAN",{"default":True}),
+                "frequency_penalty":("FLOAT",{"default":0.0}), 
+                "presence_penalty":("FLOAT",{"default":0.0}), 
+                "tfs_z":("FLOAT",{"default":1.0}), 
+                "microstat_mode":("INT",{"default":0}),
+                "microstat_tau":("FLOAT",{"default":5.0}), 
+                "microstat_eta":("FLOAT",{"default":0.1}), 
+                "penalize_nl":("BOOLEAN",{"default":True}),
+                "logits_processor":("STRING",{"default":None}),
+                "stopping_criteria":("STRING",{"default":None}),
+                "grammar":("STRING",{"default":None}),
+            }
+        }
+
+    RETURN_TYPES = ("GENERATOR",)
+    FUNCTION = "execute"
+    CATEGORY = "LLM"
+
+    def execute(self, 
+        LLM, 
+        tokens:Sequence[int],
+        top_k:int,
+        top_p:float,
+        min_p:float,
+        typical_p:float,
+        temp:float,
+        repeat_penalty:float,
+        reset:bool,
+        frequency_penalty:float,
+        presence_penalty:float,
+        tfs_z:float,
+        microstat_mode:int,
+        microstat_tau:float,
+        microstat_eta:float,
+        penalize_nl:bool,
+        logits_processor,
+        stopping_criteria,
+        grammar):
+
+        generator = LLM.generate(
+            tokens,
+            top_k=top_k,
+            top_p=top_p,
+            min_p=min_p,
+            typical_p=typical_p,
+            temp=temp,
+            repeat_penalty=repeat_penalty,
+            reset=reset,
+            frequency_penalty=frequency_penalty,
+            presence_penalty=presence_penalty,
+            tfs_z=tfs_z,
+            microstat_mode=microstat_mode,
+            microstat_tau=microstat_tau,
+            microstat_eta=microstat_eta,
+            penalize_nl=penalize_nl,
+            logits_processor=logits_processor,
+            stopping_criteria=stopping_criteria,
+            grammar=grammar)
+
+        return (generator, )
+
+
+class LLM_Create_Embedding:
+    """
+    Embed a string.
+
+    https://llama-cpp-python.readthedocs.io/en/latest/api-reference/#llama_cpp.Llama.create_embedding
+
+    Missing: No return value
+    Bug: Will not instantiate node
+    """
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "LLM":("LLM",),
+            },
+            "optional": {
+                "input_str":("STRING",), # Union[str, List[str]]
+            }
+        }
+    RETURN_TYPES = ("EMBEDDING",)
+    FUNCTION = "execute"
+    CATEGORY = "LLM"
+
+    def execute(self, LLM:Llama, input_str:str):
+
+        embeddingResponse = LLM.create_embedding(input_str=input_str)
+        return (embeddingResponse, )
+
+
+class LLM_Embed:
+    """
+    Embed a string.
+
+    https://llama-cpp-python.readthedocs.io/en/latest/api-reference/#llama_cpp.Llama.embed
+    
+    Missing: No return value
+    Bug: Will not instantiate node.
+    """
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "LLM":("LLM",),
+            },
+            "optional": {
+                "input_str":("STRING",),
+            }
+        }
+    RETURN_TYPES = ()
+    FUNCTION = "execute"
+    CATEGORY = "LLM"
+
+    def execute(self, LLM:Llama, input_str:str):
+
+        list_of_floats = LLM.embed(input_str=input_str)
+        return (list_of_floats, ) # List[float] - A list of embeddings
+
+
 class LLM_Call:
     """
     Generate text from a prompt.
@@ -383,6 +532,107 @@ class LLM_Call:
             alert('RuntimeError: If the prompt fails to tokenize or the model fails to evaluate the prompt.')
         return (response['choices'][0]['text'], )
 
+
+class LLM_Save_State:
+    """
+    No idea
+
+    https://llama-cpp-python.readthedocs.io/en/latest/api-reference/#llama_cpp.Llama.save_state
+    """
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "LLM":("LLM",),
+            },
+            "optional": {
+            }
+        }
+    RETURN_TYPES = ("STATE",)
+    FUNCTION = "execute"
+    CATEGORY = "LLM"
+
+    def execute(self, LLM:Llama, input_str:str):
+
+        state = LLM.save_state()
+        return (state, )
+
+class LLM_Load_State:
+    """
+    No idea
+
+    https://llama-cpp-python.readthedocs.io/en/latest/api-reference/#llama_cpp.Llama.load_state
+    """
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "LLM":("LLM",),
+                "STATE":("STATE",),
+            },
+            "optional": {
+            }
+        }
+    RETURN_TYPES = ()
+    FUNCTION = "execute"
+    CATEGORY = "LLM"
+
+    def execute(self, LLM:Llama, state):
+
+        LLM.load_state(state=state)
+        return None
+
+
+class LLM_Token_BOS:
+    """
+    Return the beginning-of-sequence token.
+
+    https://llama-cpp-python.readthedocs.io/en/latest/api-reference/#llama_cpp.Llama.token_bos
+    """
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "LLM":("LLM",),
+            },
+            "optional": {
+            }
+        }
+    RETURN_TYPES = ("TOKEN",)
+    FUNCTION = "execute"
+    CATEGORY = "LLM"
+
+    def execute(self, LLM:Llama):
+
+        token = LLM.token_bos()
+        return (token, )
+
+
+class LLM_Token_EOS:
+    """
+    Return the end-of-sequence token.
+
+    https://llama-cpp-python.readthedocs.io/en/latest/api-reference/#llama_cpp.Llama.token_eos
+    """
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "LLM":("LLM",),
+            },
+            "optional": {
+            }
+        }
+    RETURN_TYPES = ("TOKEN",)
+    FUNCTION = "execute"
+    CATEGORY = "LLM"
+
+    def execute(self, LLM:Llama):
+
+        token = LLM.token_eos()
+        return (token, )
+
+
 NODE_CLASS_MAPPINGS = {
     "Load LLM Model":LLM_Load_Model,
     "Load LLM Model Advanced":LLM_Load_Model_Advanced,
@@ -391,17 +641,31 @@ NODE_CLASS_MAPPINGS = {
     "LLM_Reset":LLM_Reset,
     "LLM_Eval":LLM_Eval,
     "LLM_Sample":LLM_Sample,
+    "LLM_Generate":LLM_Generate,
+    "LLM_Create_Embedding":LLM_Create_Embedding,
+    "LLM_Embed":LLM_Embed,
     "Call LLM":LLM_Call,
+    "LLM_Save_State":LLM_Save_State,
+    "LLM_Load_State":LLM_Load_State,
+    "LLM_Token_BOS":LLM_Token_BOS,
+    "LLM_Token_EOS":LLM_Token_EOS,
 }
 NODE_DISPLAY_NAME_MAPPINGS = {
     "Load LLM Model": "Load LLM Model",
     "Load LLM Model Advanced": "Load LLM Model Advanced",
-    "LLM_Tokenize": "LLM_Tokenize",
-    "LLM_Detokenize": "LLM_Detokenize",
-    "LLM_Reset": "LLM_Reset",
-    "LLM_Eval": "LLM_Eval",
-    "LLM_Sample": "LLM_Sample",
+    "LLM Tokenize": "LLM Tokenize",
+    "LLM Detokenize": "LLM Detokenize",
+    "LLM Reset": "LLM Reset",
+    "LLM Eval": "LLM Eval",
+    "LLM Sample": "LLM Sample",
+    "LLM Generate":"LLM Generate",
+    "LLM Create Embedding":"LLM Create Embedding",
+    "LLM Embed":"LLM Embed",
     "Call LLM":"Call LLM",
+    "LLM_Save_State":"LLM_Save_State",
+    "LLM_Load_State":"LLM_Load_State",
+    "LLM_Token_BOS":"LLM_Token_BOS",
+    "LLM_Token_EOS":"LLM_Token_EOS",
 }
 
 
