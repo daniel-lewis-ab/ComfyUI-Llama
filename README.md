@@ -18,12 +18,20 @@ from one place and let us use it somewhere else.
 - I wanted to integrate text generation and image generation AI in one interface and see what other people can come up with to use them.
 
 ## Features:
-- Currently let's you easily load GGUF models in a consistent fashion with other ComfyUI models and can use them to generate strings of output text with seemingly correct seeding and temperature.
+- Currently let's you easily load GGUF models using the basic Loader in a consistent fashion with other ComfyUI models
+- Can use models to generate strings of output text with seemingly correct seeding and temperature.
+- Partial Implementation of Advanced Loader (all but 4 or 5 arguments)
+- LLM Reset, LLM Token BOS, LLM Token EOS, 
 
 - Works well with [ComfyUI-Custom-Scripts](https://github.com/pythongosssss/ComfyUI-Custom-Scripts) and using the [ShowText](https://github.com/pythongosssss/ComfyUI-Custom-Scripts#show-text) Node to get output from the LLM.
 
 ## Upcoming Features:
-- Intend to discover how to improve interactivity so you can get a dialogue going
+
+- Implement more of __call__ arguments
+- LLM Tokenize, LLM Detokenize, LLM Eval, LLM Sample are mostly implemented but have a typecasting bug
+- LLM Create Embedding, LLM Embed are partially implemented but have an execution bug
+- LLM Set Cache is completely unimplemented
+- LLM Create Completion, LLM Create Chat Completion are completely unimplemented
 
 # Installation
 
