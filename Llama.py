@@ -50,7 +50,12 @@ class LLM_Load_Model:
 
         # basically just calls __init__ on the Llama class
         model_path = folder_paths.get_full_path("llm", Model)
-        llm = Llama(model_path=model_path, chat_format="llama-2", n_ctx=n_ctx, seed=-1)
+
+        try:
+            llm = Llama(model_path=model_path, chat_format="llama-2", n_ctx=n_ctx, seed=-1)
+
+        except ValueError:
+            alert("The model path does not exist.  Perhaps hit Ctrl+F5 and try reloading it.")
 
         return (llm,)
 
@@ -79,13 +84,17 @@ class LLM_Call:
     def execute(self, LLM, prompt, max_response_tokens, temperature, seed):
 
         # I'm using __call__ and not generate() because seed isn't available in generate!
-        response = LLM.__call__(
-            prompt=prompt, 
-            max_tokens=max_response_tokens, 
-            temperature=temperature, 
-            seed=seed,
-            stop=LLM.token_eos() )
-        # print(response['choices'][0]['text'])
+        try:
+            response = LLM.__call__(
+                prompt=prompt, 
+                max_tokens=max_response_tokens, 
+                temperature=temperature, 
+                seed=seed,
+                stop=LLM.token_eos() )
+        except ValueError:
+            alert('ValueError: If the requested tokens exceed the context window.');
+        except RuntimeError:
+            alert('RuntimeError: If the prompt fails to tokenize or the model fails to evaluate the prompt.')
         return (response['choices'][0]['text'], )
 
 NODE_CLASS_MAPPINGS = {
