@@ -18,20 +18,12 @@ from one place and let us use it somewhere else.
 - I wanted to integrate text generation and image generation AI in one interface and see what other people can come up with to use them.
 
 ## Features:
-- Currently let's you easily load GGUF models using the basic Loader in a consistent fashion with other ComfyUI models
-- Can use models to generate strings of output text with seemingly correct seeding and temperature.
-- Partial Implementation of Advanced Loader (all but 4 or 5 arguments)
-- LLM Reset, LLM Token BOS, LLM Token EOS, 
+- Currently let's you easily load GGUF models in a consistent fashion with other ComfyUI models and can use them to generate strings of output text with seemingly correct seeding and temperature.
 
 - Works well with [ComfyUI-Custom-Scripts](https://github.com/pythongosssss/ComfyUI-Custom-Scripts) and using the [ShowText](https://github.com/pythongosssss/ComfyUI-Custom-Scripts#show-text) Node to get output from the LLM.
 
 ## Upcoming Features:
-
-- Implement more of __call__ arguments
-- LLM Tokenize, LLM Detokenize, LLM Eval, LLM Sample are mostly implemented but have a typecasting bug
-- LLM Create Embedding, LLM Embed are partially implemented but have an execution bug
-- LLM Set Cache is completely unimplemented
-- LLM Create Completion, LLM Create Chat Completion are completely unimplemented
+- Intend to discover how to improve interactivity so you can get a dialogue going
 
 # Installation
 
@@ -95,18 +87,23 @@ See the documentation for [llama-cpp-python](https://abetlen.github.io/llama-cpp
 # For Possible Contributors
 
 ## Known Issues
+- Load Model Advanced's tensorsplit, kwargs, and chathandler are disabled
+- Call Advanced is disabled
+- Create Embedding method is disabled
+- Generate is disabled
+- Create Completion is disabled
+- Create Chat Completion is disabled
+- Llava has not been implemented yet
+
 - No known way to loopback output from an LLM model repeatedly.
 
     This may be resolved by using [ComfyUI-Custom-Scripts](https://github.com/pythongosssss/ComfyUI-Custom-Scripts)
     and using the [Repeater](https://github.com/pythongosssss/ComfyUI-Custom-Scripts#wip-repeater) Node, but it's
     as of yet a WIP.
 
-- Haven't widely tested models, operating systems, file path trickery, emulators, or strange abuses of inputs.
+- Haven't widely tested strange abuses of inputs.
 
-    There are now 150+ users for this project, and no errors have been reported.  I can now verify that symlinks are not
-    a problem.
-
-- Will simply crash if llama-cpp-python throws an Error.  I haven't put any special effort in to handle them.
+- Error handling and logging is still not mature.
 
 # Conclusion
 
