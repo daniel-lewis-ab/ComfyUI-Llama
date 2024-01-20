@@ -529,6 +529,99 @@ class LLM_Embed:
         return (list_of_floats, ) # List[float] - A list of embeddings
 
 
+class LLM_Create_Completion:
+    """
+    Generate text from a prompt.
+
+    https://llama-cpp-python.readthedocs.io/en/latest/api-reference/#llama_cpp.Llama.create_completion
+    Missing:
+        stream
+        logprobs
+        stop (currently stop on TOKEN_EOS)
+        stopping_criteria
+        logits_processor
+        grammar
+        logits_bias
+    """
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "LLM":("LLM",),
+                "prompt":("STRING", {"default":"", "multiline":True}),
+            },
+            "optional": {
+                "suffix":("STRING", {"default":"", "multiline":True}),
+                "max_response_tokens": ("INT", {"default": 16}),
+                "temperature": ("FLOAT", {"default": 0.8, "min":0.0, "max":1.0, "step":0.01, "round":0.01, "display":"number"}),
+                "top_p":("FLOAT", {"default":0.95}),
+                "min_p":("FLOAT", {"default":0.05}),
+                "typical_p":("FLOAT", {"default":1.0}),
+                "echo":("BOOLEAN", {"default":False}),
+                "frequency_penalty":("FLOAT", {"default":0.0}),
+                "presence_penalty":("FLOAT", {"default":0.0}),
+                "repeat_penalty":("FLOAT", {"default":1.1}),
+                "top_k": ("INT", {"default": 40}),
+                "seed": ("INT", {"default": -1}),
+                "tfs_z":("FLOAT", {"default":1.0}),
+                "mirostat_mode": ("INT", {"default": 0}),
+                "mirostat_tau":("FLOAT", {"default":5.0}),
+                "mirostat_eta":("FLOAT", {"default":0.1}),
+            }
+        }
+
+    RETURN_TYPES = ("STRING",)
+    FUNCTION = "execute"
+    CATEGORY = "LLM"
+
+    def execute(
+        self, 
+        LLM:Llama, 
+        prompt:str, 
+        suffix:str,
+        max_response_tokens:int,
+        temperature:float,
+        top_p:float,
+        min_p:float,
+        typical_p:float,
+        echo:bool,
+        frequency_penalty:float,
+        presence_penalty:float,
+        repeat_penalty:float,
+        top_k:int,
+        seed:int,
+        tfs_z:float,
+        mirostat_mode:int,
+        mirostat_tau:float,
+        mirostat_eta:float):
+
+        try:
+            response = LLM.create_completion(
+                prompt=prompt,
+                suffix=suffix,
+                max_tokens=max_response_tokens, 
+                temperature=temperature,
+                top_p=top_p,
+                min_p=min_p,
+                typical_p=typical_p,
+                echo=echo,
+                stop=LLM.token_eos(),
+                frequency_penalty=frequency_penalty,
+                presence_penalty=presence_penalty,
+                repeat_penalty=repeat_penalty,
+                top_k=top_k,
+                seed=seed, 
+                tfs_z=tfs_z,
+                mirostat_mode=mirostat_mode,
+                mirostat_tau=mirostat_tau,
+                mirostat_eta=mirostat_eta)
+        except ValueError:
+            logger.exception('ValueError: If the requested tokens exceed the context window.');
+        except RuntimeError:
+            logger.exception('RuntimeError: If the prompt fails to tokenize or the model fails to evaluate the prompt.')
+        return (response['choices'][0]['text'], )
+
+
 class LLM_Call:
     """
     Generate text from a prompt.
@@ -576,6 +669,14 @@ class LLM_Call_Advanced:
     Generate text from a prompt.
 
     https://llama-cpp-python.readthedocs.io/en/latest/api-reference/#llama_cpp.Llama.__call__
+    Missing:
+        stream
+        logprobs
+        stop (currently stop on TOKEN_EOS)
+        stopping_criteria
+        logits_processor
+        grammar
+        logits_bias
     """
     @classmethod
     def INPUT_TYPES(cls):
@@ -585,9 +686,22 @@ class LLM_Call_Advanced:
                 "prompt":("STRING", {"default":"", "multiline":True}),
             },
             "optional": {
-                "max_response_tokens": ("INT", {"default": 0}),
+                "suffix":("STRING", {"default":"", "multiline":True}),
+                "max_response_tokens": ("INT", {"default": 16}),
                 "temperature": ("FLOAT", {"default": 0.8, "min":0.0, "max":1.0, "step":0.01, "round":0.01, "display":"number"}),
+                "top_p":("FLOAT", {"default":0.95}),
+                "min_p":("FLOAT", {"default":0.05}),
+                "typical_p":("FLOAT", {"default":1.0}),
+                "echo":("BOOLEAN", {"default":False}),
+                "frequency_penalty":("FLOAT", {"default":0.0}),
+                "presence_penalty":("FLOAT", {"default":0.0}),
+                "repeat_penalty":("FLOAT", {"default":1.1}),
+                "top_k": ("INT", {"default": 40}),
                 "seed": ("INT", {"default": -1}),
+                "tfs_z":("FLOAT", {"default":1.0}),
+                "mirostat_mode": ("INT", {"default": 0}),
+                "mirostat_tau":("FLOAT", {"default":5.0}),
+                "mirostat_eta":("FLOAT", {"default":0.1}),
             }
         }
 
@@ -596,16 +710,48 @@ class LLM_Call_Advanced:
     FUNCTION = "execute"
     CATEGORY = "LLM"
 
-    def execute(self, LLM, prompt, max_response_tokens, temperature, seed):
+    def execute(
+        self, 
+        LLM:Llama, 
+        prompt:str, 
+        suffix:str,
+        max_response_tokens:int,
+        temperature:float,
+        top_p:float,
+        min_p:float,
+        typical_p:float,
+        echo:bool,
+        frequency_penalty:float,
+        presence_penalty:float,
+        repeat_penalty:float,
+        top_k:int,
+        seed:int,
+        tfs_z:float,
+        mirostat_mode:int,
+        mirostat_tau:float,
+        mirostat_eta:float):
 
         # I'm using __call__ and not generate() because seed isn't available in generate!
         try:
             response = LLM.__call__(
-                prompt=prompt, 
+                prompt=prompt,
+                suffix=suffix,
                 max_tokens=max_response_tokens, 
-                temperature=temperature, 
-                seed=seed,
-                stop=LLM.token_eos() )
+                temperature=temperature,
+                top_p=top_p,
+                min_p=min_p,
+                typical_p=typical_p,
+                echo=echo,
+                stop=LLM.token_eos(),
+                frequency_penalty=frequency_penalty,
+                presence_penalty=presence_penalty,
+                repeat_penalty=repeat_penalty,
+                top_k=top_k,
+                seed=seed, 
+                tfs_z=tfs_z,
+                mirostat_mode=mirostat_mode,
+                mirostat_tau=mirostat_tau,
+                mirostat_eta=mirostat_eta)
         except ValueError:
             logger.exception('ValueError: If the requested tokens exceed the context window.');
         except RuntimeError:
@@ -726,7 +872,9 @@ NODE_CLASS_MAPPINGS = {
     "LLM_Eval":LLM_Eval,
     "LLM_Sample":LLM_Sample,
     "LLM_Embed":LLM_Embed,
+    "LLM_Create_Completion":LLM_Create_Completion,
     "Call LLM":LLM_Call,
+    "Call LLM Advanced":LLM_Call_Advanced,
     "LLM_Save_State":LLM_Save_State,
     "LLM_Load_State":LLM_Load_State,
     "LLM_Token_BOS":LLM_Token_BOS,
@@ -747,7 +895,9 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "LLM Eval": "LLM Eval",
     "LLM Sample": "LLM Sample",
     "LLM Embed":"LLM Embed",
+    "LLM Create Completion":"LLM Create Completion",
     "Call LLM":"Call LLM",
+    "Call LLM Advanced":"Call LLM Advanced",
     "LLM_Save_State":"LLM_Save_State",
     "LLM_Load_State":"LLM_Load_State",
     "LLM_Token_BOS":"LLM_Token_BOS",
