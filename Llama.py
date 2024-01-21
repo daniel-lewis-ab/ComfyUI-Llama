@@ -861,47 +861,45 @@ class LLM_Token_EOS:
 # Bugged ones:
 # "LLM_Create_Embedding":LLM_Create_Embedding,
 # "LLM_Generate":LLM_Generate,
-# "Call LLM":LLM_Call_Advanced,
 
 NODE_CLASS_MAPPINGS = {
-    "Load LLM Model":LLM_Load_Model,
-    "Load LLM Model Advanced":LLM_Load_Model_Advanced,
-    "LLM_Detokenize":LLM_Detokenize,
+    "Load LLM Model Basic":LLM_Load_Model,
+    "Call LLM Basic":LLM_Call,
     "LLM_Tokenize":LLM_Tokenize,
+    "LLM_Detokenize":LLM_Detokenize,
     "LLM_Reset":LLM_Reset,
     "LLM_Eval":LLM_Eval,
     "LLM_Sample":LLM_Sample,
     "LLM_Embed":LLM_Embed,
-    "LLM_Create_Completion":LLM_Create_Completion,
-    "Call LLM":LLM_Call,
-    "Call LLM Advanced":LLM_Call_Advanced,
     "LLM_Save_State":LLM_Save_State,
     "LLM_Load_State":LLM_Load_State,
     "LLM_Token_BOS":LLM_Token_BOS,
     "LLM_Token_EOS":LLM_Token_EOS,
+    "Load LLM Model Advanced":LLM_Load_Model_Advanced,
+    "Call LLM Advanced":LLM_Call_Advanced,
+    "LLM_Create_Completion Advanced":LLM_Create_Completion,
 }
 
 # Bugged ones:
 # "LLM Create Embedding":"LLM Create Embedding",
 # "LLM Generate":"LLM Generate",
-# "Call LLM":"Call LLM Advanced",
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "Load LLM Model": "Load LLM Model",
-    "Load LLM Model Advanced": "Load LLM Model Advanced",
+    "Load LLM Model Basic": "Load LLM Model Basic",
+    "Call LLM Basic":"Call LLM Basic",
     "LLM Tokenize": "LLM Tokenize",
     "LLM Detokenize": "LLM Detokenize",
     "LLM Reset": "LLM Reset",
     "LLM Eval": "LLM Eval",
     "LLM Sample": "LLM Sample",
     "LLM Embed":"LLM Embed",
-    "LLM Create Completion":"LLM Create Completion",
-    "Call LLM":"Call LLM",
-    "Call LLM Advanced":"Call LLM Advanced",
     "LLM_Save_State":"LLM_Save_State",
     "LLM_Load_State":"LLM_Load_State",
     "LLM_Token_BOS":"LLM_Token_BOS",
     "LLM_Token_EOS":"LLM_Token_EOS",
+    "Load LLM Model Advanced": "Load LLM Model Advanced",
+    "Call LLM Advanced":"Call LLM Advanced",
+    "LLM Create Completion Advanced":"LLM Create Completion Advanced",
 }
 
 

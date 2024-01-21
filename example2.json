@@ -1,0 +1,476 @@
+{
+  "last_node_id": 87,
+  "last_link_id": 106,
+  "nodes": [
+    {
+      "id": 12,
+      "type": "Text Concatenate",
+      "pos": [
+        -510,
+        210
+      ],
+      "size": [
+        400,
+        140
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text_a",
+          "type": "STRING",
+          "link": 26,
+          "widget": {
+            "name": "text_a"
+          }
+        },
+        {
+          "name": "text_b",
+          "type": "STRING",
+          "link": 6,
+          "widget": {
+            "name": "text_b"
+          }
+        },
+        {
+          "name": "text_c",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "text_c"
+          }
+        },
+        {
+          "name": "text_d",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "text_d"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            99
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Text Concatenate"
+      },
+      "widgets_values": [
+        "",
+        "false",
+        "",
+        "",
+        "",
+        ""
+      ]
+    },
+    {
+      "id": 7,
+      "type": "ShowText|pysssss",
+      "pos": [
+        -510,
+        580
+      ],
+      "size": [
+        400,
+        150
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 100,
+          "widget": {
+            "name": "text"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            29
+          ],
+          "shape": 6,
+          "slot_index": 0
+        }
+      ],
+      "title": "How I Would Rewrite It",
+      "properties": {
+        "Node name for S&R": "ShowText|pysssss"
+      },
+      "widgets_values": [
+        "",
+        " \nCreate a Python script that prints \"Hello World\" to the console when executed.\n\n\"\"\"\nprint(\"Hello World\")\n"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 28,
+      "type": "Reroute",
+      "pos": [
+        -210,
+        -130
+      ],
+      "size": [
+        75,
+        26
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "",
+          "type": "*",
+          "link": 29
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "STRING",
+          "links": [],
+          "label": "New Prompt",
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "showOutputText": false,
+        "horizontal": false
+      }
+    },
+    {
+      "id": 26,
+      "type": "Reroute",
+      "pos": [
+        -530,
+        -140
+      ],
+      "size": [
+        75,
+        26
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "",
+          "type": "*",
+          "link": 25,
+          "widget": {
+            "name": "value"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "STRING",
+          "links": [
+            26
+          ],
+          "slot_index": 0,
+          "label": "Prompt"
+        }
+      ],
+      "properties": {
+        "showOutputText": false,
+        "horizontal": false
+      }
+    },
+    {
+      "id": 27,
+      "type": "Reroute",
+      "pos": [
+        -530,
+        -110
+      ],
+      "size": [
+        75,
+        26
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "",
+          "type": "*",
+          "link": 97
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "LLM",
+          "links": [
+            101
+          ],
+          "slot_index": 0,
+          "label": "LLM"
+        }
+      ],
+      "properties": {
+        "showOutputText": false,
+        "horizontal": false
+      }
+    },
+    {
+      "id": 84,
+      "type": "Call LLM Basic",
+      "pos": [
+        -510,
+        390
+      ],
+      "size": [
+        400,
+        150
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "LLM",
+          "type": "LLM",
+          "link": 101
+        },
+        {
+          "name": "prompt",
+          "type": "STRING",
+          "link": 99,
+          "widget": {
+            "name": "prompt"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            100
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Call LLM Basic"
+      },
+      "widgets_values": [
+        "",
+        0,
+        0.8,
+        263,
+        "randomize"
+      ]
+    },
+    {
+      "id": 9,
+      "type": "Text Multiline",
+      "pos": [
+        -510,
+        -40
+      ],
+      "size": [
+        400,
+        210
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 0,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            6
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "title": "Additional Prompting",
+      "properties": {
+        "Node name for S&R": "Text Multiline"
+      },
+      "widgets_values": [
+        "\nSoftware Engineer:\n\nI will not repeat your original request.\nI will not ask further questions.\n\nI will rewrite your request rewording it to get a better answer, conforming to PEP8 standards.\n\nRewritten Request:"
+      ]
+    },
+    {
+      "id": 8,
+      "type": "Text Multiline",
+      "pos": [
+        -950,
+        -130
+      ],
+      "size": {
+        "0": 319.1883544921875,
+        "1": 185.91651916503906
+      },
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            25
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "title": "Filthy Humans Request",
+      "properties": {
+        "Node name for S&R": "Text Multiline"
+      },
+      "widgets_values": [
+        "Customer:\n\nI want to write a python script that says \"Hello World\" to stdout.  "
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 83,
+      "type": "Load LLM Model Basic",
+      "pos": [
+        -950,
+        90
+      ],
+      "size": {
+        "0": 315,
+        "1": 82
+      },
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "LLM",
+          "type": "LLM",
+          "links": [
+            97
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Load LLM Model Basic"
+      },
+      "widgets_values": [
+        "wizardcoder-python-13b-v1.0.Q4_K_M.gguf",
+        0
+      ]
+    }
+  ],
+  "links": [
+    [
+      6,
+      9,
+      0,
+      12,
+      1,
+      "STRING"
+    ],
+    [
+      25,
+      8,
+      0,
+      26,
+      0,
+      "*"
+    ],
+    [
+      26,
+      26,
+      0,
+      12,
+      0,
+      "STRING"
+    ],
+    [
+      29,
+      7,
+      0,
+      28,
+      0,
+      "*"
+    ],
+    [
+      97,
+      83,
+      0,
+      27,
+      0,
+      "*"
+    ],
+    [
+      99,
+      12,
+      0,
+      84,
+      1,
+      "STRING"
+    ],
+    [
+      100,
+      84,
+      0,
+      7,
+      0,
+      "STRING"
+    ],
+    [
+      101,
+      27,
+      0,
+      84,
+      0,
+      "LLM"
+    ]
+  ],
+  "groups": [
+    {
+      "title": "How I Would Rewrite It",
+      "bounding": [
+        -520,
+        -180,
+        420,
+        920
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "locked": false
+    }
+  ],
+  "config": {},
+  "extra": {},
+  "version": 0.4
+}

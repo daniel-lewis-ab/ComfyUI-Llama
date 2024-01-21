@@ -65,12 +65,12 @@ Either post an issue on github, or ask [on Element in Comfy's channel](https://m
 
 5. Check your ComfyUI available nodes and find the LLM menu.
 
-6. Load LLM Model
+6. Load LLM Model Basic
 
 This is a simplified call of this:
 [llama-cpp-python's init method](https://abetlen.github.io/llama-cpp-python/#llama_cpp.llama.Llama.__init__)
 
-7. Call LLM Model
+7. Call LLM Model Basic
 
 This is a simplified call of this:
 
@@ -80,8 +80,17 @@ This is a simplified call of this:
 Either post an issue on github, or ask [on Element in Comfy's channel](https://matrix.to/#/#comfyui:matrix.org)
 
 ## Examples
+
+Example 1 shows the two most basic nodes in their simplest setup.  The call node will output the results as a string.
+You would have to use a custom node to show text.  If you don't have one, I would suggest using ComfyUI-Custom-Script's ShowText node.
+
 ![image](https://github.com/daniel-lewis-ab/ComfyUI-Llama/blob/main/example1.png)
-You can also load the example1.json file.
+
+Example 2 shows a slightly more advanced configuration that suggests changes to human written python code.  This is
+just one of several workflow tools that I have at my disposal.
+
+![image](https://github.com/daniel-lewis-ab/ComfyUI-Llama/blob/main/example2.png)
+
 See the documentation for [llama-cpp-python](https://abetlen.github.io/llama-cpp-python/) on that interface
 
 # For Possible Contributors
