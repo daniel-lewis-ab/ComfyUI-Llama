@@ -3,7 +3,6 @@ import os
 import subprocess
 import json
 from .Llama import NODE_CLASS_MAPPINGS, NODE_DISPLAY_NAME_MAPPINGS
-from .Router import NODE_CLASS_MAPPINGS, NODE_DISPLAY_NAME_MAPPINGS
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
 
