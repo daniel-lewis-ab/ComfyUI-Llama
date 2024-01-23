@@ -70,7 +70,7 @@ if first_install:
         print("Llama installed")
     except Exception as e:
         print(f"An error occurred during installation: {e}")
-        print("Something went wrong. Please try running the Update.bat inside ComfyUI/custom_nodes/Llama. If the error still remains, please open an issue on https://github.com/daniel-lewis-ab/Llama")
+        print("Something went wrong. Please try running the Update.bat inside ComfyUI/custom_nodes/ComfyUI-Llama. If the error still remains, please open an issue on https://github.com/daniel-lewis-ab/ComfyUI-Llama")
     update_config(auto_update_path, False)
 
 if auto_update:
