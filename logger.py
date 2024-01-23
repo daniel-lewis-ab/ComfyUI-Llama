@@ -25,7 +25,7 @@ class ColoredFormatter(logging.Formatter):
 
 
 # Create a new logger
-logger = logging.getLogger("VideoHelperSuite")
+logger = logging.getLogger("ComfyUI-Llama")
 logger.propagate = False
 
 # Add handler if we don't have one.
