@@ -86,7 +86,6 @@ class LLM_Load_Model_Advanced:
     https://llama-cpp-python.readthedocs.io/en/latest/api-reference/#llama_cpp.Llama.__init__
 
     Missing:
-        tensor-split
         kv_overrides
         chat_handler
         **kwargs
@@ -105,6 +104,7 @@ class LLM_Load_Model_Advanced:
                 "n_gpu_layers": ("INT", {"default": 0, "min":0}),
                 "split_mode": (["LLAMA_SPLIT_NONE", "LLAMA_SPLIT_LAYER", "LLAMA_SPLIT_ROW"], {"default": "LLAMA_SPLIT_LAYER"}),
                 "main_gpu": ("INT", {"default": 0, "min":0}),
+                "tensor_split": ("FLOAT", {"default": 0.0, "min":0.0, "max":1.0, "step":0.01}),
                 "vocab_only": ("BOOLEAN", {"default": False}),
                 "use_mmap": ("BOOLEAN", {"default": True}),
                 "use_mlock": ("BOOLEAN", {"default": False}),
@@ -137,51 +137,58 @@ class LLM_Load_Model_Advanced:
         }
 
     # ComfyUI will effectively return the Llama class instanciation provided by execute() and call it an LLM
+    INPUT_IS_LIST = True
     RETURN_TYPES = ("LLM",)
     FUNCTION = "execute"
     CATEGORY = "LLM"
 
     def execute(
         self, 
-        Model:str, 
-        n_gpu_layers:int, 
-        split_mode:str,
-        main_gpu:int, 
-        tensor_split:List[float],
-        vocab_only:bool,
-        use_mmap:bool,
-        use_mlock:bool,
-        seed:int,
-        n_ctx:int,
-        n_batch:int,
-        n_threads:int,
-        n_threads_batch:int,
-        rope_scaling_type:str,
-        rope_freq_base:float,
-        rope_freq_scale:float,
-        yarn_ext_factor:float,
-        yarn_attn_factor:float,
-        yarn_beta_fast:float,
-        yarn_beta_slow:float,
-        yarn_orig_ctx:int,
-        mul_mat_q:bool,
-        logits_all:bool,
-        embedding:bool,
-        offload_kqv:bool,
-        last_n_tokens_size:int,
-        lora_base:str,
-        lora_scale:float,
-        lora_path:str,
-        numa:bool,
-        chat_format:str,
-        verbose:bool):
+        Model,
+        n_gpu_layers,
+        split_mode,
+        main_gpu,
+        tensor_split,
+        vocab_only,
+        use_mmap,
+        use_mlock,
+        seed,
+        n_ctx,
+        n_batch,
+        n_threads,
+        n_threads_batch,
+        rope_scaling_type,
+        rope_freq_base,
+        rope_freq_scale,
+        yarn_ext_factor,
+        yarn_attn_factor,
+        yarn_beta_fast,
+        yarn_beta_slow,
+        yarn_orig_ctx,
+        mul_mat_q,
+        logits_all,
+        embedding,
+        offload_kqv,
+        last_n_tokens_size,
+        lora_base,
+        lora_scale,
+        lora_path,
+        numa,
+        chat_format,
+        verbose):
 
         # basically just calls __init__ on the Llama class
-        model_path = folder_paths.get_full_path("llm", Model)
+        model_str = str(Model[0]) if isinstance(Model, list) else str(Model)
+
+        print(str(model_str) + " " + str(type(model_str)))
+
+        model_path = folder_paths.get_full_path("llm", model_str)
+
+        print(str(model_path))
 
         LLAMA_SPLIT = {
             'LLAMA_SPLIT_NONE': 0,
-            'LLAMA_SPLIT_LAYERS': 1,
+            'LLAMA_SPLIT_LAYER': 1,
             'LLAMA_SPLIT_ROWS': 2,
         }
 
@@ -193,42 +200,47 @@ class LLM_Load_Model_Advanced:
         }
 
         try:
+            split_mode_value = str(split_mode[0]) if isinstance(split_mode, list) else str(split_mode)
+            rope_scaling_type_value = str(rope_scaling_type[0]) if isinstance(rope_scaling_type, list) else str(rope_scaling_type)
+
             llm = Llama(
                 model_path=model_path,
-                n_gpu_layers=n_gpu_layers, 
-                split_mode=LLAMA_SPLIT[split_mode],
-                main_gpu=main_gpu, 
-                vocab_only=vocab_only,
-                use_mmap=use_mmap,
-                use_mlock=use_mlock,
-                seed=seed,
-                n_ctx=n_ctx,
-                n_batch=n_batch,
-                n_threads=n_threads,
-                n_threads_batch=n_threads_batch,
-                rope_scaling_type=LLAMA_ROPE_SCALING[rope_scaling_type],
-                rope_freq_base=rope_freq_base,
-                rope_freq_scale=rope_freq_scale,
-                yarn_ext_factor=yarn_ext_factor,
-                yarn_attn_factor=yarn_attn_factor,
-                yarn_beta_fast=yarn_beta_fast,
-                yarn_beta_slow=yarn_beta_slow,
-                yarn_orig_ctx=yarn_orig_ctx,
-                mul_mat_q=mul_mat_q,
-                logits_all=logits_all,
-                embedding=embedding,
-                offload_kqv=offload_kqv,
-                last_n_tokens_size=last_n_tokens_size,
-                lora_base=lora_base,
-                lora_scale=lora_scale,
-                lora_path=lora_path,
-                numa=numa,
-                chat_format=chat_format,
-                verbose=verbose)
+                n_gpu_layers=n_gpu_layers[0], 
+                split_mode=int(LLAMA_SPLIT[split_mode_value]),
+                main_gpu=main_gpu[0], 
+                tensor_split=tensor_split,
+                vocab_only=vocab_only[0],
+                use_mmap=use_mmap[0],
+                use_mlock=use_mlock[0],
+                seed=seed[0],
+                n_ctx=n_ctx[0],
+                n_batch=n_batch[0],
+                n_threads=n_threads[0],
+                n_threads_batch=n_threads_batch[0],
+                rope_scaling_type=int(LLAMA_ROPE_SCALING[rope_scaling_type_value]),
+                rope_freq_base=rope_freq_base[0],
+                rope_freq_scale=rope_freq_scale[0],
+                yarn_ext_factor=yarn_ext_factor[0],
+                yarn_attn_factor=yarn_attn_factor[0],
+                yarn_beta_fast=yarn_beta_fast[0],
+                yarn_beta_slow=yarn_beta_slow[0],
+                yarn_orig_ctx=yarn_orig_ctx[0],
+                mul_mat_q=mul_mat_q[0],
+                logits_all=logits_all[0],
+                embedding=embedding[0],
+                offload_kqv=offload_kqv[0],
+                last_n_tokens_size=last_n_tokens_size[0],
+                lora_base=lora_base[0],
+                lora_scale=lora_scale[0],
+                lora_path=lora_path[0],
+                numa=numa[0],
+                chat_format=chat_format[0],
+                verbose=verbose[0])
 
         except ValueError:
             logger.exception("The model path does not exist.  Perhaps hit Ctrl+F5 and try reloading it.")
         return (llm,)
+
 
 
 class LLM_Tokenize:
