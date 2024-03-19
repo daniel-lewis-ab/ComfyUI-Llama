@@ -96,7 +96,7 @@ See the documentation for [llama-cpp-python](https://abetlen.github.io/llama-cpp
 # For Possible Contributors
 
 ## Known Issues
-- Load Model Advanced's tensorsplit, kwargs, and chathandler are disabled
+- Load Model Advanced's kwargs, and chathandler are disabled
 - Call Advanced's stream, logprobs, stop, stopping_criteria, logits_processor, logits_bias, grammar are disabled
 - Create Completion's stream, logprobs, stop, stopping_criteria, logits_processor, logits_bias, grammar are disabled
 - Create Embedding method is disabled
