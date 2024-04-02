@@ -4,7 +4,7 @@ import logging
 
 # NOTE: This *was* ripped virtually wholesale from VideoHelperSuite which is GPL licensed.
 # https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite
-# Explicit permission from Kosinkadink pending
+# Explicit permission from Kosinkadink granted
 
 class ColoredFormatter(logging.Formatter):
     COLORS = {
