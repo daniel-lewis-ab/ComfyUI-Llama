@@ -1,8 +1,8 @@
 [project]
 name = "comfyui-llama"
-description = "This is a set of nodes to interact with llama-cpp-python"
+description = "This is a nodepack which simply exposes llama-cpp-python on ComfyUI"
 version = "1.0.0"
-license = "LICENSE"
+license = "MIT"
 dependencies = ["llama-cpp-python"]
 
 [project.urls]
