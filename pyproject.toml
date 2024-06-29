@@ -1,0 +1,15 @@
+[project]
+name = "comfyui-llama"
+description = "This is a set of nodes to interact with llama-cpp-python"
+version = "1.0.0"
+license = "LICENSE"
+dependencies = ["llama-cpp-python"]
+
+[project.urls]
+Repository = "https://github.com/daniel-lewis-ab/ComfyUI-Llama"
+#  Used by Comfy Registry https://comfyregistry.org
+
+[tool.comfy]
+PublisherId = ""
+DisplayName = "ComfyUI-Llama"
+Icon = ""
