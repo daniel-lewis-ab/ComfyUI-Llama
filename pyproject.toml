@@ -2,7 +2,7 @@
 name = "comfyui-llama"
 description = "This is a nodepack which simply exposes llama-cpp-python on ComfyUI"
 version = "1.0.0"
-license = "MIT"
+license = "AGPL"
 dependencies = ["llama-cpp-python"]
 
 [project.urls]
